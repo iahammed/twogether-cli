@@ -27,12 +27,9 @@ class App
         if(!isset($argv[1])){
             echo 'Please provied input file name';
             return;
-        } elseif(!isset($argv[2])) {
-            echo 'Please provied output file name';
-            return;
         } else {
             $inputFile = 'input/' . $argv[1];
-            $outFile = 'output/' . $argv[2];
+            $outFile = 'output/' .  'output.csv';
             $data = $this->getFileManager()->fileReader($inputFile);
             if(count($data) <= 0){
                 echo 'This file do not contents any usefull information';

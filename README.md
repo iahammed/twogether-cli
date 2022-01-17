@@ -18,11 +18,11 @@ at "output/emp.txt"
 
 1.  > chmod +x cli
 2.  > composer dump-autoload
-3.  > For Linux / Mac if you know php location Update the path of php at first line of cli file  
+3.  > For Linux / Mac update php interpreter location Update the path at first line of cli file  
     > to run in the terminal
 
-    ./cli <emp.txt> <output.csv> (input file under "input" directory) (Output will be under "output" directory)
+    ./cli <emp.txt> (input file under "input" directory) (Output will be under "output" directory)
 
     or
 
-    run > php ./cli <emp.txt> <output.csv> (input file under "input" directory) (Output will be under "output" directory)
+    run > php ./cli <emp.txt>(input file under "input" directory) (Output will be under "output" directory)

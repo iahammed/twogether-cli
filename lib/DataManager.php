@@ -46,12 +46,21 @@ class DataManager
     }
 
     /** 
-     * is Weekend  or Friday
+     * is Weekend 
      * @param string $date
      * @return boolean 
      */
-    public function isWeekend($date) {
-        return (date('N', strtotime($date)) > 5);
+    public function isWeekendOrFriday($date) {
+        return (date('N', strtotime($date)) >= 5);
+    }
+
+    /** 
+     * is Friday 
+     * @param string $date
+     * @return boolean 
+     */
+    public function isFriday($date) {
+        return ((int)date('N', strtotime($date)) === 5);
     }
 
     /** 
@@ -63,8 +72,12 @@ class DataManager
     public function getWorkingDate($date, $officeClose) {
         $yr = date("Y");
         $date = $yr . '-' . date('m-d', strtotime($date));
-        if($this->isWeekend($date)){
-            $backDate = date('Y-m-d', strtotime("next tuesday", strtotime($date)));
+        if($this->isWeekendOrFriday($date)){
+            
+            $this->isFriday($date) ? 
+                $backDate = date('Y-m-d', strtotime("next monday", strtotime($date))) :
+                $backDate = date('Y-m-d', strtotime("next tuesday", strtotime($date))); 
+            
             if(in_array($backDate, $officeClose)){
                 $backDate = date('Y-m-d', strtotime($backDate . ' +1 day'));
                 /** Check for Bankholiday in row */
@@ -124,6 +137,8 @@ class DataManager
                 ];
             }
         }
+        // Sort the according to date
+        ksort($csvData);
         return $csvData;
     }
 }
