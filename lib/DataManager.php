@@ -73,7 +73,6 @@ class DataManager
         $yr = date("Y");
         $date = $yr . '-' . date('m-d', strtotime($date));
         if($this->isWeekendOrFriday($date)){
-            
             $this->isFriday($date) ? 
                 $backDate = date('Y-m-d', strtotime("next monday", strtotime($date))) :
                 $backDate = date('Y-m-d', strtotime("next tuesday", strtotime($date))); 
@@ -109,7 +108,7 @@ class DataManager
             $previousDate = date('Y-m-d', strtotime($date . ' -1 day'));
             
             if(array_key_exists($date, $csvData)){
-                $csvData[$date]['NumberOfSmallCakes'] = $csvData[$date]['NumberOfSmallCakes'] - 1;
+                $csvData[$date]['NumberOfSmallCakes'] = $csvData[$date]['NumberOfSmallCakes'] >= 1 ? $csvData[$date]['NumberOfSmallCakes'] - 1 : 0;
                 $csvData[$date]['NumberOfLargeCakes'] = $csvData[$date]['NumberOfLargeCakes'] + 1;
                 $name = array($csvData[$date]['NamesOfPeople'], $d[0]);
                 $csvData[$date]['NamesOfPeople'] = implode(", ", $name);
