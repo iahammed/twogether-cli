@@ -3,5 +3,8 @@
         "psr-4": {
           "Twogether\\": "lib/"
         }
+    },
+    "require": {
+        "phpunit/phpunit": "^9.5"
     }
 }

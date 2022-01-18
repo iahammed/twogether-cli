@@ -64,6 +64,16 @@ class DataManager
     }
 
     /** 
+     * is Weekend 
+     * @param string $date
+     * @return boolean 
+     */
+    public function isWeekend($date) {
+        return ((int)date('N', strtotime($date)) > 5);
+    }
+
+
+    /** 
      * Working day after Birthday 
      * @param string $date
      * @param array $officeClose
@@ -75,19 +85,44 @@ class DataManager
         if($this->isWeekendOrFriday($date)){
             $this->isFriday($date) ? 
                 $backDate = date('Y-m-d', strtotime("next monday", strtotime($date))) :
-                $backDate = date('Y-m-d', strtotime("next tuesday", strtotime($date))); 
-            
+                    $backDate = date('Y-m-d', strtotime("next tuesday", strtotime($date))); 
+
+            $bankHolidayWeekend = false;
+            $nextMonday = date('Y-m-d', strtotime("next monday", strtotime($date)));
+
+            if(in_array($nextMonday, $officeClose)){
+                $bankHolidayWeekend = true;
+                $backDate = $backDate = date('Y-m-d', strtotime("next monday", strtotime($date)));
+            }
+
             if(in_array($backDate, $officeClose)){
-                $backDate = date('Y-m-d', strtotime($backDate . ' +1 day'));
+                $bankHolidayWeekend ? 
+                    $backDate = date('Y-m-d', strtotime($backDate . ' +2 day')) :
+                        $backDate = date('Y-m-d', strtotime($backDate . ' +1 day'));
+                
                 /** Check for Bankholiday in row */
+                if($bankHolidayWeekend){
+                    $beforeBackDay = date('Y-m-d', strtotime($backDate . ' -1 day'));
+                    if(in_array($beforeBackDay, $officeClose)){
+                        $backDate = date('Y-m-d', strtotime($backDate . ' +1 day'));
+                    }
+                }
+
                 if(in_array($backDate, $officeClose)){
-                    return date('Y-m-d', strtotime($backDate . ' +1 day'));
+                    $backDate = date('Y-m-d', strtotime($backDate . ' +1 day'));
                 }
                 return $backDate;
             } else {
                 return $backDate;
             }
         } else {
+            if(in_array($date, $officeClose)){
+                $backDate = date('Y-m-d', strtotime($date . ' +1 day'));
+                if(in_array($backDate, $officeClose)){
+                    $backDate =  date('Y-m-d', strtotime($backDate . ' +1 day'));
+                }
+                return date('Y-m-d', strtotime($backDate . ' +1 day'));
+            }
             return date('Y-m-d', strtotime($date . ' +1 day'));
         }
     }

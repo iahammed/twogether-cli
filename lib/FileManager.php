@@ -2,6 +2,8 @@
 
 namespace Twogether;
 
+use Twogether\models\Employee;
+
 class FileManager
 {
     /**
@@ -15,10 +17,13 @@ class FileManager
         if(file_exists($filename)){
             $lines = file($filename, FILE_IGNORE_NEW_LINES);
             foreach ($lines as $line) {
-                $data[] = explode(',' , $line);
+                $item =  array_map('trim', explode(',', $line));
+                $employees[] = new Employee($item[0], $item[1]);
+                $data[] = $item;
             }
-        } 
+        }
         return $data;
+
     }
 
     /**
