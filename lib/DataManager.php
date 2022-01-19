@@ -2,6 +2,8 @@
 
 namespace Twogether;
 
+use Twogether\models\CakeDate;
+
 class DataManager
 {
     /** 
@@ -170,6 +172,56 @@ class DataManager
                     'NamesOfPeople'  =>  $d[0],
                 ];
             }
+        }
+        // Sort the according to date
+        ksort($csvData);
+        return $csvData;
+    }
+
+    /** 
+     * Prepare CSV ready data
+     * @param array $data
+     * @param array $officeClose
+     * @return array $csvData
+     */
+    public function prepareCsvObjData($data, $officeClose)
+    {
+        $csvData = array( 
+            ['Date', 'Number of Small Cakes', 'Number of Large Cakes', 'Names of people getting cake'], 
+        );
+
+        foreach($data as $d){
+            $date = $this->getWorkingDate($d->dob, $officeClose);
+            $previousDate = date('Y-m-d', strtotime($date . ' -1 day'));
+
+            if (array_key_exists($date, $csvData)) {
+                $cakeDate = $csvData[$date][0];
+                $cakeDate->NumberOfSmallCakes = $cakeDate->NumberOfSmallCakes >=1 ? $cakeDate->NumberOfSmallCakes -1 : 0;
+                $cakeDate->NumberOfLargeCakes = 1;
+                $cakeDate->setEmployee($d);
+            } elseif (array_key_exists($previousDate, $csvData)){
+                $cakeDate = $csvData[$previousDate][0];
+                if($cakeDate->NumberOfLargeCakes > 0){
+                    $date = $this->getWorkingDate(date('Y-m-d', strtotime($d->dob . ' +1 day')), $officeClose);
+                    $cakeDate->date = $date;
+                    $cakeDate->NumberOfSmallCakes = 1;
+                    $cakeDate->NumberOfLargeCakes = 0;
+                    $cakeDate->setEmployee($d);
+                } else {
+                    $cakeDate->date = $date;
+                    $cakeDate->NumberOfSmallCakes = 0;
+                    $cakeDate->NumberOfLargeCakes = 1;
+                    $cakeDate->setEmployee($d);
+                    unset($csvData[$previousDate]);
+                }
+            } else {
+                $cakeDay = new CakeDate($date, 1, 0);
+                $cakeDay->setEmployee($d);
+                $csvData[$date] = [
+                    $cakeDay
+                ];
+            }
+
         }
         // Sort the according to date
         ksort($csvData);

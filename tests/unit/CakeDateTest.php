@@ -11,8 +11,8 @@ class CakeDateTest extends \PHPUnit\Framework\TestCase {
         $cakeDay = new CakeDate('2022-10-10', 1, 0);
         $cakeDay->setEmployee($emp);
         $this->assertEquals($cakeDay->date, '2022-10-10');
-        $this->assertEquals($cakeDay->smallCake, 1);
-        $this->assertEquals($cakeDay->largeCake, 0);
+        $this->assertEquals($cakeDay->NumberOfSmallCakes, 1);
+        $this->assertEquals($cakeDay->NumberOfLargeCakes, 0);
         $this->assertEquals($cakeDay->employees, ['Ivan']);
     }    
 
@@ -23,14 +23,12 @@ class CakeDateTest extends \PHPUnit\Framework\TestCase {
 
         $cakeDay = new CakeDate('2022-10-10', 1, 0);
         $this->assertEquals($cakeDay->date(), '2022-10-10');
-        $this->assertEquals($cakeDay->smallCake, 1);
-        $this->assertEquals($cakeDay->largeCake, 0);
+        $this->assertEquals($cakeDay->NumberOfSmallCakes, 1);
+        $this->assertEquals($cakeDay->NumberOfLargeCakes, 0);
         $cakeDay->setEmployee($emp1);
         $cakeDay->setEmployee($emp2);
         $this->assertEquals($cakeDay->employees, ['Ivan', 'Kuheli']);
     }    
-
-
 
 
 }

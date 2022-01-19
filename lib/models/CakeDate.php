@@ -5,29 +5,19 @@ namespace Twogether\models;
 class CakeDate {
 
     public $date;
-    public $smallCake;
-    public $largeCake;
+    public $NumberOfSmallCakes;
+    public $NumberOfLargeCakes;
     public $employees = [];
 
-    public function __construct( $date, $smallCake = 0, $largeCake = 0 )
+    public function __construct( $date, $NumberOfSmallCakes = 0, $NumberOfLargeCakes = 0 )
     {
         $this->date = $date;
-        $this->smallCake = $smallCake;
-        $this->largeCake = $largeCake;
+        $this->NumberOfSmallCakes = $NumberOfSmallCakes;
+        $this->NumberOfLargeCakes = $NumberOfLargeCakes;
     }
 
     public function date(){
         return $this->date;
-    }
-
-    public function smallCake()
-    {
-        return $this->smallCake;
-    }
-
-    public function largeCake()
-    {
-        return $this->largeCake;
     }
 
     public function setEmployee(Employee $employee)

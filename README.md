@@ -12,13 +12,18 @@ Date, Number of Small Cakes, Number of Large Cakes, Names of people getting cake
 
 at "output/emp.txt"
 
-## How to install
+## How to Test
+
+1.  > Conposer install
+2.  > composer dump-autoload
+3.  > ./vendor/bin/phpunit --testdox
 
 ### Run the follwoing command from root folder
 
-1.  > chmod +x cli
-2.  > composer dump-autoload
-3.  > For Linux / Mac update php interpreter location Update the path at first line of cli file  
+1.  > Conposer install
+2.  > chmod +x cli
+3.  > composer dump-autoload
+4.  > For Linux / Mac update php interpreter location Update the path at first line of cli file  
     > to run in the terminal
 
     ./cli <emp.txt> (input file under "input" directory) (Output will be under "output" directory)

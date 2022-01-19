@@ -10,13 +10,13 @@ class Employee {
     public function __construct($name, $dob)
     {
         $this->name = $name;
-        $this->dob = $this->formatDate($dob);
+        $this->dob = $dob; //$this->formatDate($dob);
     }
 
-    protected function formatDate($date, $format = 'Y-m-d'){
-        $phpdate = strtotime( $date );
-        $mysqldate = date( $format, $phpdate );
-        return $mysqldate;
-    }
+    // protected function formatDate($date, $format = 'Y-m-d'){
+    //     $phpdate = strtotime( $date );
+    //     $mysqldate = date( $format, $phpdate );
+    //     return $mysqldate;
+    // }
 
 }
