@@ -205,12 +205,7 @@ class DataManager
                     $date = $this->getWorkingDate(date('Y-m-d', strtotime($d->dob . ' +1 day')), $officeClose);
                     $cakeDay = new CakeDate($date, 1, 0);
                     $cakeDay->setEmployee($d);
-                    $csvData[$date] = [$cakeDay];
-                    // $cakeDate->date = $date;
-                    // $cakeDate->NumberOfSmallCakes = 1;
-                    // $cakeDate->NumberOfLargeCakes = 0;
-                    // $cakeDate->setEmployee($d);
-                    
+                    $csvData[$date] = [$cakeDay];                    
                 } else {
                     $cakeDate->date = $date;
                     $cakeDate->NumberOfSmallCakes = 0;
