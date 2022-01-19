@@ -192,7 +192,7 @@ class DataManagerTest extends  \PHPUnit\Framework\TestCase {
             ['Pete', '1950-07-20'],
         ];
 
-        $resultShouldBe_alex_jane = [
+        $resultShouldBe_alex_jen = [
             'date' => '2022-07-20',
             'NumberOfSmallCakes' => 0,
             'NumberOfLargeCakes' => 1,
@@ -208,7 +208,7 @@ class DataManagerTest extends  \PHPUnit\Framework\TestCase {
 
         $officeClose = $this->getClose();
         $csvData = (new DataManager)->prepareCsvData($fileData, $officeClose);
-        $this->assertEquals($csvData['2022-07-20'], $resultShouldBe_alex_jane);
+        $this->assertEquals($csvData['2022-07-20'], $resultShouldBe_alex_jen);
         $this->assertEquals($csvData['2022-07-22'], $resultShouldBe_pete);
     }
 
