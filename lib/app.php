@@ -29,24 +29,24 @@ class App
             return;
         } else {
             $inputFile = 'input/' . $argv[1];
-            $outFile = 'output/' .  'output.csv';
             $officeClose = $this->getDataMaanger()->calculateClose();
 
             /**
              *  ARRAY RELATE
              */
-            // $data = $this->getFileManager()->fileReader($inputFile);
-            // if(count($data) <= 0){
-            //     echo 'This file do not contents any usefull information';
-            //     return;
-            // }
-            // $csvData = $this->getDataMaanger()->prepareCsvData($data, $officeClose);
-            // if(count($csvData) <=0 ){
-            //     echo 'This file do not contents any usefull information';
-            //     return;
-            // }
-            // $this->getFileManager()->outputCsv($outFile, $csvData);
-            // echo 'Please find your  procesed file at : ' . $outFile;
+            $data = $this->getFileManager()->fileReader($inputFile);
+            if(count($data) <= 0){
+                echo 'This file do not contents any usefull information';
+                return;
+            }
+            $csvData = $this->getDataMaanger()->prepareCsvData($data, $officeClose);
+            if(count($csvData) <=0 ){
+                echo 'This file do not contents any usefull information';
+                return;
+            }
+            $outFile = 'output/' .  'output_from_array.csv';
+            $this->getFileManager()->outputCsv($outFile, $csvData);
+            echo 'Please find your  procesed file at : ' . $outFile;
 
             /** -------- ARRAY RELATE END---------- */
 
@@ -60,7 +60,7 @@ class App
                 echo 'This file do not contents any usefull information';
                 return;
             }
-
+            $outFile = 'output/' .  'output_from_obj.csv';
             $this->getFileManager()->outputCsvFromObj($outFile, $csvData);
             echo 'Please find your  procesed file at : ' . $outFile;
             /** -------- OBJECT RELATED RELATE END---------- */
