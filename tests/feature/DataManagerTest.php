@@ -1,6 +1,8 @@
 <?php
 
 use Twogether\DataManager;
+use Twogether\models\CakeDate;
+use Twogether\models\Employee;
 
 class DataManagerTest extends  \PHPUnit\Framework\TestCase {
 
@@ -208,6 +210,86 @@ class DataManagerTest extends  \PHPUnit\Framework\TestCase {
         $csvData = (new DataManager)->prepareCsvData($fileData, $officeClose);
         $this->assertEquals($csvData['2022-07-20'], $resultShouldBe_alex_jane);
         $this->assertEquals($csvData['2022-07-22'], $resultShouldBe_pete);
+    }
+
+    public function test_obj_rob_dob_3rd_July_1950_Sunday_get_small_cake_Tuesday_7th_July()
+    {
+        $fileData = [
+            ['Rob', '1950-07-03']
+        ];
+        foreach($fileData as $data){
+            $emp[] = new Employee($data[0], $data[1]);
+        }
+
+        $resultShouldBe = (new CakeDate('2022-07-05', 1, 0));
+        $resultShouldBe->setEmployee($emp[0]);
+        
+        $officeClose = $this->getClose();
+        $csvData = (new DataManager)->prepareCsvObjData($emp, $officeClose);
+        
+        $this->assertEquals($csvData['2022-07-05'][0], $resultShouldBe);
+    }
+
+
+    public function test_Obj_Sam_dob_is_Monday_11th_July_and_Kate_is_Tuesday_12th_July_They_share_a_large_cake_on_Wednesday_13th_July()
+    {
+        $fileData = [
+            ['Sam', '1950-07-11'],
+            ['Kate', '1950-07-12'],
+        ];
+        $employees = [];
+        $resultShouldBe = (new CakeDate('2022-07-13', 0, 1));
+
+        foreach($fileData as $data){
+            $employee = new Employee($data[0], $data[1]);
+            $employees[] = $employee;
+            $resultShouldBe->setEmployee($employee);
+        }
+        $officeClose = $this->getClose();
+        $csvData = (new DataManager)->prepareCsvObjData($employees, $officeClose);
+
+        $this->assertEquals($csvData['2022-07-13'][0], $resultShouldBe);
+    }
+
+    public function test_obj_Alex_Jen_and_Pete_have_birthdays_on_the_18th_19th_and_20th_of_July_Alex_and_Jen_share_a_large_cake_on_Wednesday_20th_Pete_gets_a_small_cake_on_Friday_22th()
+    {
+        $fileData = [
+            ['Alax', '1950-07-18'],
+            ['Jen', '1950-07-19'],
+            ['Pete', '1950-07-20'],
+        ];
+
+        $fileDataAlexJen = [
+            ['Alax', '1950-07-18'],
+            ['Jen', '1950-07-19'],
+        ];
+
+        $fileDataPete = [
+            ['Pete', '1950-07-20'],
+        ];
+
+        $employees = [];
+
+        $resultAlexJen = (new CakeDate('2022-07-20', 0, 1));
+        $resultPete = (new CakeDate('2022-07-22', 1, 0));
+
+        foreach($fileDataAlexJen as $data){
+            $employee = new Employee($data[0], $data[1]);
+            $resultAlexJen->setEmployee($employee);
+            $employees[] = $employee;
+        }
+
+        foreach($fileDataPete as $data){
+            $employee = new Employee($data[0], $data[1]);
+            $resultPete->setEmployee($employee);
+            $employees[] = $employee;
+        }
+
+        $officeClose = $this->getClose();
+        $csvData = (new DataManager)->prepareCsvObjData($employees, $officeClose);
+        
+        $this->assertEquals($csvData['2022-07-20'][0], $resultAlexJen);
+        $this->assertEquals($csvData['2022-07-22'][0], $resultPete);
     }
 
     public function getClose()

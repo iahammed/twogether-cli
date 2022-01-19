@@ -185,7 +185,7 @@ class DataManager
      * @return array $csvData
      */
     public function prepareCsvObjData($data, $officeClose)
-    {
+    {   
         $csvData = array( 
             ['Date', 'Number of Small Cakes', 'Number of Large Cakes', 'Names of people getting cake'], 
         );
@@ -203,15 +203,20 @@ class DataManager
                 $cakeDate = $csvData[$previousDate][0];
                 if($cakeDate->NumberOfLargeCakes > 0){
                     $date = $this->getWorkingDate(date('Y-m-d', strtotime($d->dob . ' +1 day')), $officeClose);
-                    $cakeDate->date = $date;
-                    $cakeDate->NumberOfSmallCakes = 1;
-                    $cakeDate->NumberOfLargeCakes = 0;
-                    $cakeDate->setEmployee($d);
+                    $cakeDay = new CakeDate($date, 1, 0);
+                    $cakeDay->setEmployee($d);
+                    $csvData[$date] = [$cakeDay];
+                    // $cakeDate->date = $date;
+                    // $cakeDate->NumberOfSmallCakes = 1;
+                    // $cakeDate->NumberOfLargeCakes = 0;
+                    // $cakeDate->setEmployee($d);
+                    
                 } else {
                     $cakeDate->date = $date;
                     $cakeDate->NumberOfSmallCakes = 0;
                     $cakeDate->NumberOfLargeCakes = 1;
                     $cakeDate->setEmployee($d);
+                    $csvData[$date] = [$cakeDate];
                     unset($csvData[$previousDate]);
                 }
             } else {
