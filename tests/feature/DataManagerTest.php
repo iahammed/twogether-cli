@@ -212,6 +212,25 @@ class DataManagerTest extends  \PHPUnit\Framework\TestCase {
         $this->assertEquals($csvData['2022-07-22'], $resultShouldBe_pete);
     }
 
+    public function test_obj_Dave_dob_friday_24th_June_1986_get_small_cake_on_monday_27th()
+    {
+        $fileData = [
+            ['Dave', '1986-06-24']
+        ];
+
+        foreach($fileData as $data){
+            $emp[] = new Employee($data[0], $data[1]);
+        }
+
+        $resultShouldBe = (new CakeDate('2022-06-27', 1, 0));
+        $resultShouldBe->setEmployee($emp[0]);
+
+        $officeClose = $this->getClose();
+        $csvData = (new DataManager)->prepareCsvObjData($emp, $officeClose);
+        
+        $this->assertEquals($csvData['2022-06-27'][0], $resultShouldBe);
+    }
+
     public function test_obj_rob_dob_3rd_July_1950_Sunday_get_small_cake_Tuesday_7th_July()
     {
         $fileData = [
