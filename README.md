@@ -14,13 +14,13 @@ at "output/emp.txt"
 
 ## How to Test
 
-1.  > Conposer install
+1.  > composer install
 2.  > composer dump-autoload
 3.  > ./vendor/bin/phpunit --testdox
 
 ### Run the follwoing command from root folder
 
-1.  > Conposer install
+1.  > composer install
 2.  > chmod +x cli
 3.  > composer dump-autoload
 4.  > For Linux / Mac update php interpreter location Update the path at first line of cli file  
