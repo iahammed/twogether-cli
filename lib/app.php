@@ -5,11 +5,12 @@ namespace Twogether;
 class App
 {
     protected $dataManager;
+    protected $fileManager;
 
     public function __construct()
     {
         $this->dataManager = new DataManager();
-        $this->fileManager = New FileManager();
+        $this->fileManager = new FileManager();
     }
     
     public function getFileManager()
